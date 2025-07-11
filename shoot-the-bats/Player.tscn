@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://drxb1ada2nukq"]
+
+[ext_resource type="PackedScene" uid="uid://bqwlvryohkema" path="res://player/simple_gun/gun_model.glb" id="1_iwpo4"]
+[ext_resource type="Script" uid="uid://dtc0konskhdt5" path="res://player.gd" id="1_kpjcp"]
+[ext_resource type="Texture2D" uid="uid://ktpbddmt1w7" path="res://player/reticle.png" id="3_kne1u"]
+[ext_resource type="AudioStream" uid="uid://d3ripn664vxgp" path="res://player/gun_shoot.wav" id="4_e80uo"]
+
+[sub_resource type="GDScript" id="GDScript_kpjcp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bu0v1"]
+
+[node name="Player" type="CharacterBody3D"]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 0.999985, -0.00549774, 0, 0.00549774, 0.999985, 0, 0, 0)
+script = ExtResource("1_kpjcp")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.345119, 0)
+script = SubResource("GDScript_kpjcp")
+
+[node name="gun_model" parent="Camera3D" instance=ExtResource("1_iwpo4")]
+transform = Transform3D(-0.299897, -0.00566999, -0.00547214, -0.00564286, 0.299942, -0.00153425, 0.00549995, -0.00143081, -0.299946, 0.158366, -0.252831, -0.293254)
+
+[node name="Marker3D" type="Marker3D" parent="Camera3D/gun_model"]
+unique_name_in_owner = true
+transform = Transform3D(1, 1.74623e-10, 1.11759e-07, 0, 0.999999, -1.86265e-09, 0, -1.39698e-09, 0.999999, -0.0236839, 0.0236107, 0.519571)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_bu0v1")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -26.5
+offset_right = 26.5
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_kne1u")
+expand_mode = 1
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.25
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_e80uo")
